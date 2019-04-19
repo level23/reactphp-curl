@@ -13,7 +13,7 @@ class Curl {
     public $loop;
 
     /**
-     * @var \React\EventLoop\Timer\TimerInterface
+     * @var \React\EventLoop\TimerInterface
      */
     public $loop_timer;
 
@@ -35,7 +35,7 @@ class Curl {
         $this->loop = $loop;
         $this->client = new \MCurl\Client();
         $this->client->isSelect(false);
-        $this->client->setClassResult('\\KHR\\React\Curl\\Result');
+        $this->client->setClassResult('\KHR\React\Curl\Result');
     }
 
     /**
@@ -95,7 +95,7 @@ class Curl {
             $this->loop_timer = $this->loop->addPeriodicTimer($this->timeout, function() {
                 $this->run();
                 if (!($this->client->run() || $this->client->has())) {
-                    $this->loop_timer->cancel();
+                    $this->loop->cancelTimer($this->loop_timer);
                     $this->loop_timer = null;
                 }
             });
